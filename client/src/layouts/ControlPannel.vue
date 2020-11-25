@@ -1,7 +1,14 @@
 <template>
   <div class="control-panel">
     <div class="toggle-view">Toggle View</div>
-    <div class="process-view">Process View</div>
+    <div class="process-view">
+      Process List View
+      <ul>
+        <li v-for="item in processList" :key="item.processId">
+          <span>{{ item.name }}</span>
+        </li>
+      </ul>
+    </div>
     <div class="status-view">Status View</div>
   </div>
 </template>
@@ -15,6 +22,7 @@ export default {
   computed: {
     ...mapGetters({
       deviceId: "getDeviceId",
+      processList: "getProcessList",
     }),
   },
   watch: {
