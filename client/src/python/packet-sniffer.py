@@ -8,7 +8,7 @@ serverAddr = "49.247.197.181"
 serverPort = "8000"
 
 def getNetActivity():
-    sniff(count=1, prn=sendData)
+    sniff(count=0, prn=sendData)
     
 def packetFormatter(packet):
     packet_dict = {}
@@ -24,17 +24,19 @@ def packetFormatter(packet):
 
 def sendData(packet):
     packet_dict = packetFormatter(packet)
+    r = {}
+
     if ("IP" in packet_dict):
         dst_ip = packet_dict["IP"]["dst"]
         if (dst_ip != serverAddr):
             destination = "http://" + serverAddr + ":" + serverPort + "/users/" + str(connectionID) + "/packet"
             r = requests.post(destination, data={"data": json.dumps(packet_dict)}).text
 
-    if not r:
-        print("ERROR: Server doesn't answer")
-    else:
-        if r['code'] != 1:
-            print("ERROR: " + r['code'])
+    # if not r:
+    #     print("ERROR: Server doesn't answer")
+    # else:
+    #     if r['code'] != 1:
+    #         print("ERROR: " + r['code'])
 
 if __name__ == "__main__":
     if sys.argv[1]:

@@ -25,7 +25,7 @@ def getNetActivity():
         newInfo["remote_ip"] = conn.raddr[0] if conn.raddr else ''
         newInfo["remote_port"] = conn.raddr[1] if conn.raddr else ''
 
-        processList[conn.pid] = newInfo
+        processList[str(conn.pid)] = newInfo
 
     return processList
 
@@ -33,11 +33,11 @@ def sendData(processList):
     destination = "http://" + serverAddr + ":" + serverPort + "/users/" + str(connectionID) + "/process"
     r = requests.post(destination, data={"data": json.dumps(processList)}).text
     
-    if not r:
-        print("ERROR: Server doesn't answer")
-    else:
-        if r['code'] != 1:
-            print("ERROR: " + r['code'])
+    # if not r:
+    #     print("ERROR: Server doesn't answer")
+    # else:
+    #     if r['code'] != 1:
+    #         print("ERROR: " + r['code'])
 
 
 if __name__ == "__main__":
