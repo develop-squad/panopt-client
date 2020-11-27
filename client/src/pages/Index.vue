@@ -15,6 +15,7 @@ export default {
     return {
       map: {},
       nowProcessList: [],
+      currentMarkerList: [],
     };
   },
   computed: {
@@ -24,15 +25,14 @@ export default {
   },
   watch: {
     processList(newProcessList) {
-      console.log(newProcessList);
-      console.log(this.nowProcessList);
-      // let refinedProcessList = this.nowProcessList;
       this.nowProcessList.forEach((process) => {
-        if (newProcessList.find((el) => el.processId !== process.processId)) {
+        if (!newProcessList.find((el) => el.processId == process.processId)) {
           // delete
           this.nowProcessList = this.nowProcessList.filter(
             (el) => el.processId !== process.processId
           );
+          console.log("DELETE");
+          this.deleteNetwork(process.processId, process.lng, process.lat);
         }
       });
 
@@ -43,12 +43,11 @@ export default {
 
         if (thisProcess) {
           if (thisProcess.remote_ip !== process.remote_ip) {
-            // update
+            console.log("Update");
             this.getLocation(process, thisProcess);
           }
         } else {
-          console.log("C");
-          //  created
+          console.log("Create");
           this.getLocation(process, 0);
         }
       });
@@ -56,7 +55,6 @@ export default {
   },
   mounted() {
     this.initMapbox();
-    this.drawNetwork("test");
   },
   methods: {
     initMapbox() {
@@ -71,65 +69,87 @@ export default {
         zoom: 3,
       });
 
-      const startMarker = new mapboxgl.Marker()
+      const startMarker = new mapboxgl.Marker({
+        color: "red",
+      })
         .setLngLat([127.07387104135374, 37.55047772513164])
         .addTo(this.map);
     },
     drawNetwork(process) {
       let mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
-      console.log("DRAW");
+
       if (process.lng && process.lat) {
-        var lastMarker = new mapboxgl.Marker()
+        var market = new mapboxgl.Marker()
           .setLngLat([process.lng, process.lat])
           .addTo(this.map);
+
+        this.currentMarkerList.push(market);
+
+        this.map.addSource(process.processId, {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: {
+                  color: "#F7455D", // red
+                },
+                geometry: {
+                  type: "LineString",
+                  coordinates: [
+                    [127.07387104135374, 37.55047772513164],
+                    [process.lng, process.lat],
+                  ],
+                },
+              },
+            ],
+          },
+        });
+
+        this.map.addLayer({
+          id: process.processId,
+          type: "line",
+          source: process.processId,
+          paint: {
+            "line-width": 3,
+            "line-color": ["get", "color"],
+          },
+        });
       }
+    },
+    deleteNetwork(processId, lng, lat) {
+      console.log(processId);
+      this.currentMarkerList.find((el) => el._lngLat.lat == lat).remove();
+      this.currentMarkerList.splice(
+        this.currentMarkerList.findIndex((el) => el._lngLat.lat == lat),
+        1
+      );
+      this.map.removeLayer(processId);
+      this.map.removeSource(processId);
+      this.nowProcessList = this.nowProcessList.filter(
+        (el) => el.processId !== processId
+      );
 
-      // this.map.on("load", () => {
-      //   this.map.addSource("lines", {
-      //     type: "geojson",
-      //     data: {
-      //       type: "FeatureCollection",
-      //       features: [
-      //         {
-      //           type: "Feature",
-      //           properties: {
-      //             color: "#F7455D", // red
-      //           },
-      //           geometry: {
-      //             type: "LineString",
-      //             coordinates: [
-      //               [127.07387104135374, 37.55047772513164],
-      //               [116.429686846067, 39.928359181991986],
-      //             ],
-      //           },
-      //         },
-      //       ],
-      //     },
-      //   });
-
-      //   this.map.addLayer({
-      //     id: "lines",
-      //     type: "line",
-      //     source: "lines",
-      //     paint: {
-      //       "line-width": 3,
-      //       "line-color": ["get", "color"],
-      //     },
-      //   });
-      // });
+      console.log(this.map.getStyle());
     },
     getLocation(process, updated) {
       this.$store.dispatch(T.GET_LOCATION_FROM_IP, {
         ip: process.remote_ip,
         cSuc: (data) => {
+          console.log("GETLOCATION", updated);
           process.lat = data.latitude;
           process.lng = data.longitude;
           if (updated) {
+            console.log("UP");
             updated = process;
           } else {
             this.drawNetwork(process);
             this.nowProcessList.push(process);
           }
+        },
+        cErr: (err) => {
+          console.log(err);
         },
       });
     },

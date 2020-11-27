@@ -72,13 +72,11 @@ export const actions = {
         if (responses[0].status == 200) {
           params.cSuc(responses[0].data);
         } else {
-          console.log(responses[0]);
-          console.log("ERR");
+          params.cErr(responses[0]);
         }
       })
       .catch(error => {
-        console.log("ERR");
-        console.log(error);
+        params.cErr(error);
       });
   },
   [T.UPDATE_PROCESS_LIST]({ commit, state }, params) {
