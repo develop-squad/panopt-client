@@ -3,9 +3,11 @@ import requests
 import sys
 import json
 
-connectionID = -1
 serverAddr = "49.247.197.181"
 serverPort = "8000"
+
+def errorPrint(msg):
+    print("ERROR: " + msg)
 
 def getNetActivity():
     processList = {}
@@ -25,29 +27,10 @@ def getNetActivity():
         newInfo["remote_ip"] = conn.raddr[0] if conn.raddr else ''
         newInfo["remote_port"] = conn.raddr[1] if conn.raddr else ''
 
-        processList[str(conn.pid)] = newInfo
+        processList[conn.pid] = newInfo
 
     return processList
 
-def sendData(processList):
-    destination = "http://" + serverAddr + ":" + serverPort + "/users/" + str(connectionID) + "/process"
-    r = requests.post(destination, data={"data": json.dumps(processList)}).text
-    
-    # if not r:
-    #     print("ERROR: Server doesn't answer")
-    # else:
-    #     if r['code'] != 1:
-    #         print("ERROR: " + r['code'])
-
-
 if __name__ == "__main__":
-    if sys.argv[1]:
-        connectionID = sys.argv[1]
-
-    if (connectionID == -1):
-        print(-1)
-        print("ERROR: Undefined Connection ID")
-    else:
-        processList = getNetActivity()
-        print(processList)
-        sendData(processList)
+    processList = getNetActivity()
+    print(json.dumps(processList))
