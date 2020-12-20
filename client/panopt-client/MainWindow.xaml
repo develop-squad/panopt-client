@@ -1,0 +1,40 @@
+﻿<controls:MetroWindow x:Class="panopt_client.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+
+                      xmlns:local="clr-namespace:panopt_client"
+                      mc:Ignorable="d"
+                      Title="MainWindow" Height="350" Width="525">
+    <DockPanel HorizontalAlignment="Stretch" LastChildFill="true">
+        <DockPanel Background="DimGray" DockPanel.Dock="Top" Height="25" Name="titleBar">
+            <!-- <Image DockPanel.Dock="Top" Stretch="Fill" Name="titleMainIcon" Width="48" Height="22" Margin="2,2,2,2" /> -->
+        </DockPanel>
+        <Grid
+            Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DockPanel}}}"
+            Height="Auto"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Column="1" Grid.Row="0" Name="Menu"
+                Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DockPanel}}}"
+                Height="Auto"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            </Grid>
+        </Grid>
+    </DockPanel>
+</controls:MetroWindow>
