@@ -1,10 +1,12 @@
 # Panopt Client
 
-> Panopt 개요
+> Panopt - AI 기반 네트워크 이상 탐지
 
 ![version] ![license] ![lang] ![support]
 
-상세 설명
+Panopt는 시용자와 프로세스의 네트워크 사용 패턴을 통해<br>
+대용량 트래픽에서 이상 여부를 탐지하는 AI 기반의 네트워크 이상 탐지 프로그램입니다.<br>
+증가하는 네트워크 침해 사고에 대해 적은 비용과 높은 정확도로 위협을 탐지합니다.<br>
 
 ## Documents
 
