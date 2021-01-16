@@ -16,7 +16,7 @@ Panopt는 시용자와 프로세스의 네트워크 사용 패턴을 통해<br>
 
 스크린샷
 
-## Tech Stack
+## Tech Stacks
 
 Web Frontend
 * [Vue.js](https://github.com/vuejs/vue)
@@ -26,7 +26,7 @@ Web Frontend
 Window Client
 * [Python](https://www.python.org/)
 
-## Participant
+## Participants
 
 ### [Moon Juhan](https://github.com/MoonJuhan)
 
