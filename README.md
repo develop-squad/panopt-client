@@ -10,7 +10,8 @@ Panopt는 시용자와 프로세스의 네트워크 사용 패턴을 통해<br>
 
 ## Documents
 
-문서
+System Architecture
+<img src="./docs/flow.png" width="100%">
 
 ## Screenshots
 <img src="./docs/screenshots01.png" width="100%">
