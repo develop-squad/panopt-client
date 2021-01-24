@@ -41,5 +41,5 @@ Window Client Developer
 
 [version]: https://img.shields.io/badge/version-v1.0.0-blue
 [support]: https://img.shields.io/badge/support-End-black
-[license]: https://img.shields.io/github/license/Team-Pork-and-Rice-Soupp/angelhack-front
+[license]: https://img.shields.io/github/license/develop-squad/panopt-client
 [lang]: https://img.shields.io/github/languages/top/develop-squad/panopt-client
