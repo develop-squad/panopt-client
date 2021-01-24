@@ -1,6 +1,6 @@
 # Panopt Client
 
-> Panopt - AI 기반 네트워크 이상 탐지
+>AI를 사용한 PC 네트워크 감시 및 토폴로지 가시화 시스템 클라이언트 프로젝트
 
 ![version] ![license] ![lang] ![support]
 
@@ -13,8 +13,10 @@ Panopt는 시용자와 프로세스의 네트워크 사용 패턴을 통해<br>
 문서
 
 ## Screenshots
-
-스크린샷
+<img src="./docs/screenshots01.png" width="100%">
+<img src="./docs/screenshots02.png" width="100%">
+<img src="./docs/screenshots03.png" width="100%">
+<img src="./docs/screenshots04.png" width="100%">
 
 ## Tech Stacks
 
